@@ -1,11 +1,21 @@
+import { multipleCitiesListStyle } from './Styles';
+
 export default function MultipleCitiesList(props) {
-  const multipleCitiesArray = !props.multipleCities ? [] : props.multipleCities;
+  console.log(
+    'multipleCitiesArray in MulitpleCitiesList: ',
+    props.listOfCities,
+  );
+  const multipleCitiesArray = !props.listOfCities
+    ? []
+    : JSON.parse(props.listOfCities);
 
   return (
-    <ul>
-      {multipleCitiesArray.map((element, index) => {
-        return <li key={index}>{element}</li>;
-      })}
-    </ul>
+    <div css={multipleCitiesListStyle} className="multipleCitiesList">
+      <ul>
+        {multipleCitiesArray.map((element, index) => {
+          return <li key={index}>{element}</li>;
+        })}
+      </ul>
+    </div>
   );
 }
