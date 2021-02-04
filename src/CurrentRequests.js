@@ -7,7 +7,7 @@ export default function CurrentRequests(props) {
 
   if (multipleCities.length > 0) {
     multipleCities = JSON.parse(multipleCities);
-    console.log('in currentreq after parsing: ', typeof multipleCities);
+    // console.log('in currentreq after parsing: ', typeof multipleCities);
   }
 
   return (

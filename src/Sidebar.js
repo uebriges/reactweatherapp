@@ -33,7 +33,6 @@ export default function Sidebar() {
     // Browser integrates fetch! -> Try that!
     // Alternative: Got -> extra package
     const promisesArray = [];
-    console.log('citiesArray: ', citiesArray);
     citiesArray.map((element, index) => {
       let promise = new Promise((resolve, reject) => {
         http.get(
@@ -55,7 +54,6 @@ export default function Sidebar() {
       });
       promisesArray.push(promise);
     });
-    console.log('PromiseArray: ', promisesArray);
     return promisesArray;
   }
 
@@ -91,7 +89,18 @@ export default function Sidebar() {
         console.log('result: ', result);
         multipleCitiesArray = result;
         if (multipleCitiesArray[0].cod !== '404') {
+          console.log('not 404');
           setMultipleCitiesRequest(JSON.stringify(multipleCitiesArray));
+          if (localStorage.getItem('citiesToMove')) {
+            setCitiesToMoveToLatestRequests(
+              JSON.parse(localStorage.getItem('citiesToMove')),
+            );
+          }
+          console.log('multipleCitiesArray: ', multipleCitiesArray);
+          localStorage.setItem(
+            'citiesToMove',
+            JSON.stringify(multipleCitiesArray),
+          );
         } else {
           setErrorMessage('City not found.');
         }
@@ -111,7 +120,6 @@ export default function Sidebar() {
   }
 
   async function addEntry() {
-    console.log('--> addEntry');
     const newCityString = singleCityRequest;
 
     if (multipleCitiesArray.length === 0) {
@@ -119,7 +127,6 @@ export default function Sidebar() {
       if (newCityString === '') {
         setErrorMessage('Please enter a city.');
       } else if (await checkIfCityExists(newCityString)) {
-        console.log('first entry and city exists');
         multipleCitiesArray.push(newCityString);
         localStorage.setItem(
           'multipleCities',
@@ -138,7 +145,6 @@ export default function Sidebar() {
       if (newCityString === '') {
         setErrorMessage('Please enter a city.');
       } else if (!(await checkIfCityExists(newCityString))) {
-        console.log('in !checkIfCityExists');
         setErrorMessage('City not found.');
       } else {
         multipleCitiesArray.push(newCityString);
@@ -152,11 +158,11 @@ export default function Sidebar() {
     } else {
       setErrorMessage('Entry already in the list.');
     }
-    console.log('<-- addEntry');
   }
 
   function removeEntry() {
-    localStorage.clear();
+    //localStorage.clear();
+    localStorage.setItem('multipleCities', '[]');
     setListOfCities(JSON.stringify([]));
   }
 

@@ -7,7 +7,7 @@ export default function LatestRequests(props) {
     ? []
     : props.citiesToMoveToLatestRequests;
 
-  console.log('multipleCities in latest requests', multipleCities);
+  // console.log('multipleCities in latest requests', multipleCities);
   // if (multipleCities.length > 0) {
   //   multipleCities = JSON.parse(multipleCities);
   //   console.log('in currentreq after parsing: ', typeof multipleCities);
