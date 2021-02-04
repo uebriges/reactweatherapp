@@ -11,7 +11,10 @@ export default function Sidebar() {
   const [multipleCitiesRequest, setMultipleCitiesRequest] = useState('');
   const [listOfCities, setListOfCities] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [movedCurrentRequests, setMovedCurrentRequests] = useState('');
+  const [
+    citiesToMoveToLatestRequests,
+    setCitiesToMoveToLatestRequests,
+  ] = useState('');
 
   let multipleCitiesArray = JSON.parse(localStorage.getItem('multipleCities'));
   multipleCitiesArray = !multipleCitiesArray ? [] : multipleCitiesArray;
@@ -20,6 +23,11 @@ export default function Sidebar() {
   useEffect(() => {
     setListOfCities(JSON.stringify(multipleCitiesArray));
   }, [listOfCities]);
+
+  // Empties the citiesToMove at the beginning.
+  useEffect(() => {
+    localStorage.setItem('citiesToMove', '[]');
+  }, []);
 
   function fetchWeatherData(citiesArray) {
     // Browser integrates fetch! -> Try that!
@@ -58,6 +66,15 @@ export default function Sidebar() {
         multipleCitiesArray = multipleCitiesArray.concat(result);
         if (multipleCitiesArray[0].cod !== '404') {
           setMultipleCitiesRequest(JSON.stringify(multipleCitiesArray));
+          if (localStorage.getItem('citiesToMove')) {
+            setCitiesToMoveToLatestRequests(
+              JSON.parse(localStorage.getItem('citiesToMove')),
+            );
+          }
+          localStorage.setItem(
+            'citiesToMove',
+            JSON.stringify(multipleCitiesArray),
+          );
         } else {
           setErrorMessage('City not found.');
         }
@@ -143,8 +160,6 @@ export default function Sidebar() {
     setListOfCities(JSON.stringify([]));
   }
 
-  function moveCurrentRequestsToLatestRequests() {}
-
   return (
     <div className="app" css={appStyle}>
       <div className="sidebar" css={sidebarStyle}>
@@ -183,7 +198,9 @@ export default function Sidebar() {
           <p>{errorMessage}</p>
         </section>
       </div>
-      <LatestRequests />
+      <LatestRequests
+        citiesToMoveToLatestRequests={citiesToMoveToLatestRequests}
+      />
       <CurrentRequests multipleCities={multipleCitiesRequest} />
     </div>
   );

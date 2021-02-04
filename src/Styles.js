@@ -31,6 +31,7 @@ export const latestRequestsStyle = css`
   padding: 10px;
   margin: 10px;
 `;
+
 export const currentRequestsStyle = css`
   background-color: gray;
   grid-column: 2 / 3;
