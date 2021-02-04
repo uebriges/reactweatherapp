@@ -11,6 +11,7 @@ export default function Sidebar() {
   const [multipleCitiesRequest, setMultipleCitiesRequest] = useState('');
   const [listOfCities, setListOfCities] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [movedCurrentRequests, setMovedCurrentRequests] = useState('');
 
   let multipleCitiesArray = JSON.parse(localStorage.getItem('multipleCities'));
   multipleCitiesArray = !multipleCitiesArray ? [] : multipleCitiesArray;
@@ -24,6 +25,7 @@ export default function Sidebar() {
     // Browser integrates fetch! -> Try that!
     // Alternative: Got -> extra package
     const promisesArray = [];
+    console.log('citiesArray: ', citiesArray);
     citiesArray.map((element, index) => {
       let promise = new Promise((resolve, reject) => {
         http.get(
@@ -53,31 +55,40 @@ export default function Sidebar() {
     multipleCitiesArray = [];
     if (singleCityRequest) {
       Promise.all(fetchWeatherData([singleCityRequest])).then((result) => {
-        console.log('Result: ', result);
         multipleCitiesArray = multipleCitiesArray.concat(result);
-        setMultipleCitiesRequest(JSON.stringify(multipleCitiesArray));
+        if (multipleCitiesArray[0].cod !== '404') {
+          setMultipleCitiesRequest(JSON.stringify(multipleCitiesArray));
+        } else {
+          setErrorMessage('City not found.');
+        }
       });
     }
   }
 
   function handleRequestedCities() {
-    // multipleCitiesArray = [];
-    // if (localStorage.getItem('')) {
-    //   Promise.all(fetchWeatherData([singleCityRequest])).then((result) => {
-    //     console.log('Result: ', result);
-    //     multipleCitiesArray = multipleCitiesArray.concat(result);
-    //     setMultipleCitiesRequest(JSON.stringify(multipleCitiesArray));
-    //   });
-    // }
+    multipleCitiesArray = [];
+    multipleCitiesArray = JSON.parse(localStorage.getItem('multipleCities'));
+    console.log(multipleCitiesArray);
+    if (multipleCitiesArray && multipleCitiesArray.length > 0) {
+      Promise.all(fetchWeatherData(multipleCitiesArray)).then((result) => {
+        console.log('result: ', result);
+        multipleCitiesArray = result;
+        if (multipleCitiesArray[0].cod !== '404') {
+          setMultipleCitiesRequest(JSON.stringify(multipleCitiesArray));
+        } else {
+          setErrorMessage('City not found.');
+        }
+      });
+    } else {
+      setErrorMessage('Please enter a city.');
+    }
   }
 
   async function checkIfCityExists(city) {
     const result = (await fetchWeatherData([city])[0]).cod;
     if (result === '404') {
-      console.log("Doesn't exist");
       return false;
     } else {
-      console.log('Exists');
       return true;
     }
   }
@@ -131,6 +142,8 @@ export default function Sidebar() {
     localStorage.clear();
     setListOfCities(JSON.stringify([]));
   }
+
+  function moveCurrentRequestsToLatestRequests() {}
 
   return (
     <div className="app" css={appStyle}>

@@ -3,9 +3,6 @@ import CityWeatherInfo from './CityWeatherInfo';
 import { currentRequestsStyle } from './Styles';
 
 export default function CurrentRequests(props) {
-  console.log('in currentreq: ', props.multipleCities);
-  console.log('in currentreq: ', typeof props.multipleCities);
-
   let multipleCities = !props.multipleCities ? [] : props.multipleCities;
 
   if (multipleCities.length > 0) {
