@@ -22,7 +22,7 @@ export default function Sidebar() {
   // Renders the list at refresh of the page
   useEffect(() => {
     setListOfCities(JSON.stringify(multipleCitiesArray));
-  }, [listOfCities]);
+  }, [listOfCities, multipleCitiesArray]);
 
   // Empties the citiesToMove at the beginning.
   useEffect(() => {
@@ -32,9 +32,8 @@ export default function Sidebar() {
   function fetchWeatherData(citiesArray) {
     // Browser integrates fetch! -> Try that!
     // Alternative: Got -> extra package
-    const promisesArray = [];
-    citiesArray.map((element) => {
-      const promise = new Promise((resolve, reject) => {
+    const promiseArray = citiesArray.map((element) => {
+      return new Promise((resolve, reject) => {
         http.get(
           `http://api.openweathermap.org/data/2.5/weather?q=${element}&appid=${process.env.REACT_APP_OPEN_WEATHERMAP_KEY}`,
           (resp) => {
@@ -45,6 +44,7 @@ export default function Sidebar() {
               })
               .on('end', () => {
                 resolve(JSON.parse(data));
+                return JSON.parse(data);
               })
               .on('error', (err) => {
                 reject('Error: ', err.message);
@@ -53,9 +53,8 @@ export default function Sidebar() {
           },
         );
       });
-      promisesArray.push(promise);
     });
-    return promisesArray;
+    return promiseArray;
   }
 
   function handleRequestedCity() {
