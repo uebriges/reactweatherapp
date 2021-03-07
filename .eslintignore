@@ -1,6 +1,7 @@
 .eslintrc.js
 *.config.js
 build
+.env.local
 
 # Next.js build folder
 .next
