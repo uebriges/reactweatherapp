@@ -3,7 +3,7 @@ import CityWeatherInfo from './CityWeatherInfo';
 import { latestRequestsStyle } from './Styles';
 
 export default function LatestRequests(props) {
-  let multipleCities = !props.citiesToMoveToLatestRequests
+  const multipleCities = !props.citiesToMoveToLatestRequests
     ? []
     : props.citiesToMoveToLatestRequests;
 

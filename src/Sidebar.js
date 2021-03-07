@@ -33,8 +33,8 @@ export default function Sidebar() {
     // Browser integrates fetch! -> Try that!
     // Alternative: Got -> extra package
     const promisesArray = [];
-    citiesArray.map((element, index) => {
-      let promise = new Promise((resolve, reject) => {
+    citiesArray.map((element) => {
+      const promise = new Promise((resolve, reject) => {
         http.get(
           `http://api.openweathermap.org/data/2.5/weather?q=${element}&appid=${process.env.REACT_APP_OPEN_WEATHERMAP_KEY}`,
           (resp) => {
@@ -47,6 +47,7 @@ export default function Sidebar() {
                 resolve(JSON.parse(data));
               })
               .on('error', (err) => {
+                reject('Error: ', err.message);
                 console.log('Error: ' + err.message);
               });
           },
