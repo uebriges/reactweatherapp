@@ -20,7 +20,7 @@ export default function LatestRequests(props) {
           if (element.cod !== '404') {
             return <CityWeatherInfo key={index} city={element} />;
           } else {
-            return <p>City not found. Please try again</p>;
+            return <p>Location not found. Please try again</p>;
           }
         })
       ) : (

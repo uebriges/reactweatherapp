@@ -74,7 +74,7 @@ export default function Sidebar() {
             JSON.stringify(multipleCitiesArray),
           );
         } else {
-          setErrorMessage('City not found.');
+          setErrorMessage('Location not found.');
         }
       });
     }
@@ -102,7 +102,7 @@ export default function Sidebar() {
             JSON.stringify(multipleCitiesArray),
           );
         } else {
-          setErrorMessage('City not found.');
+          setErrorMessage('Location not found.');
         }
       });
     } else {
@@ -135,7 +135,7 @@ export default function Sidebar() {
         setListOfCities(JSON.stringify(multipleCitiesArray));
         setErrorMessage('');
       } else {
-        setErrorMessage('City not found.');
+        setErrorMessage('Location not found.');
       }
     } else if (
       !JSON.parse(localStorage.getItem('multipleCities')).includes(
@@ -145,7 +145,7 @@ export default function Sidebar() {
       if (newCityString === '') {
         setErrorMessage('Please enter a city.');
       } else if (!(await checkIfCityExists(newCityString))) {
-        setErrorMessage('City not found.');
+        setErrorMessage('Location not found.');
       } else {
         multipleCitiesArray.push(newCityString);
         localStorage.setItem(
