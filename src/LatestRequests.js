@@ -24,7 +24,7 @@ export default function LatestRequests(props) {
           }
         })
       ) : (
-        <section>Request a single or multiple cities in one request.</section>
+        <section />
       )}
     </div>
   );

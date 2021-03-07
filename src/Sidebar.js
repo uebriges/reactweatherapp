@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import CurrentRequests from './CurrentRequests';
 import LatestRequests from './LatestRequests';
 import MultipleCitiesList from './MultipleCitiesList';
-import { appStyle, sidebarStyle, singleCityStyle } from './Styles';
+import { appStyle, sidebarStyle } from './Styles';
 
 export default function Sidebar() {
   const [singleCityRequest, setSingleCityRequest] = useState('');
@@ -161,7 +161,6 @@ export default function Sidebar() {
   }
 
   function removeEntry() {
-    //localStorage.clear();
     localStorage.setItem('multipleCities', '[]');
     setListOfCities(JSON.stringify([]));
   }
@@ -173,7 +172,7 @@ export default function Sidebar() {
           <h1>Weather App</h1>
           <h2>(supported by openweathermap.org)</h2>
         </section>
-        <section className="singleCity" css={singleCityStyle} id="cityName">
+        <section className="singleCity" id="cityName">
           <input
             type="text"
             onChange={(e) => setSingleCityRequest(e.target.value)}

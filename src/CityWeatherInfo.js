@@ -1,4 +1,5 @@
-import { CityWeatherInfoStyle } from './Styles';
+/** @jsxImportSource @emotion/react */
+import { cityWeatherInfoStyle } from './Styles';
 
 export default function CityWeatherInfo(props) {
   console.log(props.city);
@@ -6,7 +7,7 @@ export default function CityWeatherInfo(props) {
   console.log(props.city.sys.sunset);
 
   return (
-    <div css={CityWeatherInfoStyle}>
+    <div css={cityWeatherInfoStyle}>
       <p>City: {props.city.name}</p>
       <p>Condition: {props.city.weather[0].description}</p>
       <p>
