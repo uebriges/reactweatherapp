@@ -35,7 +35,7 @@ export default function Sidebar() {
     const promiseArray = citiesArray.map((element) => {
       return new Promise((resolve, reject) => {
         http.get(
-          `http://api.openweathermap.org/data/2.5/weather?q=${element}&appid=${process.env.REACT_APP_OPEN_WEATHERMAP_KEY}`,
+          `https://api.openweathermap.org/data/2.5/weather?q=${element}&appid=${process.env.REACT_APP_OPEN_WEATHERMAP_KEY}`,
           (resp) => {
             let data = '';
             resp
